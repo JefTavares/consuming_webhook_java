@@ -1,6 +1,6 @@
 package br.com.jeftavares.webhook_caixa_residencial.controller;
 
-import br.com.jeftavares.webhook_caixa_residencial.service.BlipService;
+import br.com.jeftavares.webhook_caixa_residencial.services.BlipService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,15 +22,12 @@ public class BlipController {
 
     @PostMapping()
     public ResponseEntity<?> handlerWebhookBlip(@RequestBody Map<String, Object> body) {
-
-        //System.out.println("Body recebido: " + body);
-
-        blipService.saveMessage(body);
-
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "success"));
+            // Apenas inicia o processamento e retorna imediatamente
+            blipService.saveMessage(body);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(Map.of("message", "Webhook recebido, processando dados"));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
         }
     }
 }
