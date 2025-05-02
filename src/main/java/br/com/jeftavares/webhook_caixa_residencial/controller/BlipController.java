@@ -14,7 +14,7 @@ import java.util.Map;
 @RequestMapping("/webhook/v1/blip")
 public class BlipController {
 
-    private BlipService blipService;
+    private final BlipService blipService;
 
     public BlipController(BlipService blipService) {
         this.blipService = blipService;

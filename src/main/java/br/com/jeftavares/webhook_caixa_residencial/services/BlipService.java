@@ -9,6 +9,8 @@ import br.com.jeftavares.webhook_caixa_residencial.repository.ContactsRepository
 import br.com.jeftavares.webhook_caixa_residencial.repository.EventsRepository;
 import br.com.jeftavares.webhook_caixa_residencial.repository.MessagesRepository;
 import br.com.jeftavares.webhook_caixa_residencial.repository.ProcessingErrorRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +42,7 @@ public class BlipService {
     }
 
 
-    public void saveMessage(Map<String, Object> body) {
+    public void saveMessage(Map<String, Object> body) throws JsonProcessingException {
         try {
             BlipWebhookTypes type = getType(body);
             processDataAsync(body, type);
@@ -52,14 +54,15 @@ public class BlipService {
             error.setTimestamp(Instant.now());
             error.setErrorMessage(e.getMessage());
             error.setStackTrace(Arrays.toString(e.getStackTrace()));
-            error.setRequestData(body.toString());
+            //error.setRequestData(body.toString());
+            error.setRequestData(new ObjectMapper().writeValueAsString(body));
 
             errorRepository.save(error);
         }
     }
 
     @Async
-    public void processDataAsync(Map<String, Object> body, BlipWebhookTypes type) {
+    public void processDataAsync(Map<String, Object> body, BlipWebhookTypes type) throws JsonProcessingException {
         try {
             switch (type) {
                 case BlipWebhookTypes.EVENT:
@@ -87,7 +90,8 @@ public class BlipService {
             error.setOperationType(type.toString());
             error.setErrorMessage(e.getMessage());
             error.setStackTrace(Arrays.toString(e.getStackTrace()));
-            error.setRequestData(body.toString());
+            //error.setRequestData(body.toString());
+            error.setRequestData(new ObjectMapper().writeValueAsString(body));
 
             errorRepository.save(error);
 

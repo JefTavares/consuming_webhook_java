@@ -22,10 +22,13 @@ public class ProcessingErrorEntity {
 
     @Field("operationType")
     private String operationType;
-    @Field("errorType")
+
+    @Field("errorMessage")
     private String errorMessage;
+
     @Field("stackTrace")
     private String stackTrace;
+
     @Field("requestData")
     private String requestData;
 

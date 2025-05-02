@@ -9,5 +9,4 @@ public class WebhookCaixaResidencialApplication {
     public static void main(String[] args) {
         SpringApplication.run(WebhookCaixaResidencialApplication.class, args);
     }
-
 }
