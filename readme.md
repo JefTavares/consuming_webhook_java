@@ -1,3 +1,49 @@
+# Subir o ambiente
+
+```sh
+terraform init
+```
+
+```sh
+terraform apply
+```
+
+```sh
+terraform destroy
+```
+
+# Configuração do ambiente
+
+# Instale pacotes necessários
+
+sudo apt update
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+
+## 2.Adicione a chave GPG do Docker
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+## 3. Adicione o repositório
+
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+## 4.Instale o Docker
+
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io
+
+## 5. Adicione seu usuário ao grupo docker (que agora existe):
+
+sudo usermod -aG docker $USER
+
+## 6. Aplique as alterações sem precisar reiniciar:
+
+newgrp docker
+
+## 7. Teste se o Docker está funcionando:
+
+docker ps
+
 ## Instalação da AWS CLi
 
 https://www.howtoforge.com/installing-aws-cli-on-ubuntu-24-04/
