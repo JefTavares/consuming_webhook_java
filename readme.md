@@ -12,6 +12,12 @@ terraform apply
 terraform destroy
 ```
 
+# Acessar a maquina EC2 via SSH
+
+```sh
+ssh ubuntu@<Endereço IPv4 público> -i ~/.ssh/id_ed25519  
+```
+
 # Configuração do ambiente
 
 # Instale pacotes necessários
@@ -43,6 +49,18 @@ newgrp docker
 ## 7. Teste se o Docker está funcionando:
 
 docker ps
+
+# instalar o java
+
+Procurar a versão
+
+sudo apt search openjdk
+
+# instalar o Maven
+
+sudo apt-get -y install maven
+
+mvn -version
 
 ## Instalação da AWS CLi
 
